@@ -17,7 +17,6 @@ class DeviceSelect extends Component {
 				>
 					<option value="Roku">Roku</option>
 					<option value="FTV">Fire TV</option>
-					<option value="temp">Temp</option>
 				</select>
 			</div>
 		);
