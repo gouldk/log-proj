@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import EntryBox from "./entryBox";
 import SubmitButton from "./submitButton";
 import DeviceSelect from "./deviceSelect";
+import DisplayResults from "./displayResults";
 import "../custom.css";
 
 // Sets the default log option
@@ -33,11 +34,12 @@ class SubmissionPage extends Component {
 						<SubmitButton onSubmit={this.handleSubmit} />
 					</div>
 				)}
-				{!this.state.preSubmission && (
+				{/* {!this.state.preSubmission && (
 					<div className="spinner-border text-primary" role="status">
 						<span className="sr-only">Loading...</span>
 					</div>
-				)}
+				)} */}
+				{!this.state.preSubmission && <DisplayResults />}
 			</div>
 		);
 	}
