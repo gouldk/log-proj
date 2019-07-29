@@ -1,0 +1,30 @@
+/* .form-control {
+	padding: 1rem 1rem;
+	 width: 80vw; 
+	 height: 60vh;
+} */
+
+.button {
+	width: 80vw;
+}
+
+.spinner-border {
+	align-items: center;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.centered {
+	align-items: center;
+	text-align: center;
+	padding: 1rem 1rem;
+}
+
+.custom-select {
+	width: 10vw;
+	/* border-color: yellowgreen; */
+}
+
+.padded {
+	padding: 1rem 1rem;
+}
