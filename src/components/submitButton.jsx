@@ -8,12 +8,12 @@ class SubmitButton extends Component {
 			<div>
 				<button
 					type="button"
-					className="btn btn-primary"
+					className="btn btn-primary m-2"
 					// className="button"
 					disabled={false}
 					onClick={this.props.onSubmit}
 				>
-					🤞🏼
+					✍🏼
 				</button>
 			</div>
 		);

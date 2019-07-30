@@ -9,16 +9,14 @@ class DeviceSelect extends Component {
 
 	render() {
 		return (
-			<div className="padded">
-				<select
-					className="custom-select"
-					onChange={e => this.props.onSelect(e.target.value)}
-					value={this.state.id}
-				>
-					<option value="Roku">Roku</option>
-					<option value="FTV">Fire TV</option>
-				</select>
-			</div>
+			<select
+				className="custom-select"
+				onChange={e => this.props.onSelect(e.target.value)}
+				value={this.state.id}
+			>
+				<option value="Roku">Roku</option>
+				<option value="FTV">Fire TV</option>
+			</select>
 		);
 	}
 }
