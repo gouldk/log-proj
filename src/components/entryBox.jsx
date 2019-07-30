@@ -17,6 +17,10 @@ class EntryBox extends Component {
 		this.setState({ textData: event.target.value });
 	}
 
+	giveLog = () => {
+		return this.state.textData;
+	};
+
 	render() {
 		// console.log(this.state.textData);
 
