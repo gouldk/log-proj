@@ -27,6 +27,7 @@ class EntryBox extends Component {
 		return (
 			<div className="shadow-sm p-3 mb-5 bg-light rounded">
 				<textarea
+					rows="12"
 					className="form-control"
 					placeholder="Paste your log here..."
 					type="text"

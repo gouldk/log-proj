@@ -54,6 +54,8 @@ class SubmissionPage extends Component {
 	render() {
 		return (
 			<div>
+				<h1 align="center">egg-log</h1>
+				<h6 align="center">{/* <i>where's your excuse now?</i> */}</h6>
 				{this.state.preSubmission && (
 					<div className="centered">
 						<EntryBox ref="logText" />
