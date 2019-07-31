@@ -4,23 +4,6 @@ import "../custom.css";
 // move button to separate component
 
 class EntryBox extends Component {
-	state = {
-		textData: ""
-	};
-
-	constructor() {
-		super();
-		this.updateText = this.updateText.bind(this);
-	}
-
-	updateText(event) {
-		this.setState({ textData: event.target.value });
-	}
-
-	giveLog = () => {
-		return this.state.textData;
-	};
-
 	render() {
 		// console.log(this.state.textData);
 
@@ -31,8 +14,8 @@ class EntryBox extends Component {
 					className="form-control"
 					placeholder="Paste your log here..."
 					type="text"
-					value={this.state.textData}
-					onChange={this.updateText}
+					value={this.props.displayText}
+					onChange={this.props.onChange}
 				/>
 			</div>
 		);

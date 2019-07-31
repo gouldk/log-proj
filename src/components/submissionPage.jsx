@@ -4,6 +4,7 @@ import SubmitButton from "./submitButton";
 import DeviceSelect from "./deviceSelect";
 import DisplayResults from "./displayResults";
 import "../custom.css";
+import Dropzone from "react-dropzone";
 
 // Sets the default log option
 let defaultLog = "Roku"; // "Roku", "FTV"...
@@ -12,6 +13,7 @@ class SubmissionPage extends Component {
 	state = {
 		preSubmission: true,
 		deviceID: defaultLog,
+		entryText: "",
 		parsedText: []
 	};
 
@@ -22,10 +24,9 @@ class SubmissionPage extends Component {
 
 	handleSubmit = () => {
 		console.log("Submit requested.");
-		let log = this.refs.logText.giveLog();
+		let log = this.state.entryText;
 		this.setState({
-			preSubmission: false,
-			textToParse: this.refs.logText.giveLog() // not necessary if directly fed into logParser() ?
+			preSubmission: false
 		});
 		// console.log(this.textToParse); // not working because setState is async?
 		this.logParser(log);
@@ -49,16 +50,33 @@ class SubmissionPage extends Component {
 		// console.log(appVersions);
 	};
 
-	renderParse = () => {};
+	onDrop = acceptedFiles => {
+		console.log(acceptedFiles);
+	};
+
+	handleTextChange = text => {
+		this.setState({ entryText: text.target.value });
+	};
 
 	render() {
 		return (
 			<div>
-				<h1 align="center">egg-log</h1>
+				<h1 align="center">*</h1>
 				<h6 align="center">{/* <i>where's your excuse now?</i> */}</h6>
 				{this.state.preSubmission && (
 					<div className="centered">
-						<EntryBox ref="logText" />
+						<Dropzone onDrop={this.onDrop}>
+							{({ getRootProps }) => (
+								<div {...getRootProps()}>
+									<p>temp</p>
+								</div>
+							)}
+						</Dropzone>
+						<EntryBox
+							ref="logText"
+							onChange={this.handleTextChange}
+							displayText={this.state.entryText}
+						/>
 						<DeviceSelect id={this.deviceID} onSelect={this.handleSelect} />
 						<SubmitButton onSubmit={this.handleSubmit} />
 					</div>
