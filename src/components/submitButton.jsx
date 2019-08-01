@@ -13,7 +13,9 @@ class SubmitButton extends Component {
 					disabled={false}
 					onClick={this.props.onSubmit}
 				>
-					✍🏼
+					<span role="img" aria-label="send">
+						✍🏼
+					</span>
 				</button>
 			</div>
 		);

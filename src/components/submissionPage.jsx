@@ -25,12 +25,10 @@ class SubmissionPage extends Component {
 	handleSubmit = () => {
 		console.log("Submit requested.");
 		let log = this.state.entryText;
-		this.setState({
-			preSubmission: false
-		});
-		// console.log(this.textToParse); // not working because setState is async?
 		this.logParser(log);
-		// console.log(log);
+		this.setState({
+			preSubmission: false //change back to false
+		});
 	};
 
 	handleSelect = deviceID => {
@@ -45,13 +43,26 @@ class SubmissionPage extends Component {
 		let appVersions = lineArray.filter(line => line.includes("app_version:"));
 		let parsedOutput = [pubAds, streamIDs, appVersions];
 		this.setState({ parsedText: parsedOutput });
+		console.log(parsedOutput);
 		// console.log(pubAds);
 		// console.log(streamIDs);
 		// console.log(appVersions);
 	};
 
+	// Flesh out with functionality & file checking
 	onDrop = acceptedFiles => {
-		console.log(acceptedFiles);
+		const reader = new FileReader();
+		const file = acceptedFiles[0];
+		console.log(file);
+
+		reader.onload = event => {
+			var contents = event.target.result;
+			this.setState({ entryText: contents });
+			this.handleSubmit();
+			// console.log("File contents: " + contents);
+		};
+
+		reader.readAsText(file);
 	};
 
 	handleTextChange = text => {
@@ -68,15 +79,14 @@ class SubmissionPage extends Component {
 						<Dropzone onDrop={this.onDrop}>
 							{({ getRootProps }) => (
 								<div {...getRootProps()}>
-									<p>temp</p>
+									<EntryBox
+										onChange={this.handleTextChange}
+										displayText={this.state.entryText}
+									/>
 								</div>
 							)}
 						</Dropzone>
-						<EntryBox
-							ref="logText"
-							onChange={this.handleTextChange}
-							displayText={this.state.entryText}
-						/>
+
 						<DeviceSelect id={this.deviceID} onSelect={this.handleSelect} />
 						<SubmitButton onSubmit={this.handleSubmit} />
 					</div>

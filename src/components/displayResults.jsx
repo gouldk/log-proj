@@ -1,72 +1,53 @@
 import React, { Component } from "react";
+import "../custom.css";
 
 class DisplayResults extends Component {
-	state = {
-		parsable: ""
-	};
+	state = {};
 
 	renderTableData = idx => {
 		return this.props.tableData[idx].map((dataPoint, index) => {
 			return (
 				<tr key={index}>
-					<td>{dataPoint}</td>
+					<td className="mr-0">{dataPoint}</td>
 				</tr>
 			);
 		});
 	};
 
-	renderDeviceData = idx => {
-		return this.props.tableData[idx].map((dataPoint, index) => {
-			return (
-				<tr key={index}>
-					<td />
-				</tr>
-			);
-		});
-	};
+	// renderDeviceData = idx => {
+	// 	return this.props.tableData[idx].map((dataPoint, index) => {
+	// 		return (
+	// 			<tr key={index}>
+	// 				<td />
+	// 			</tr>
+	// 		);
+	// 	});
+	// };
+
+	renderTable(idx, title) {
+		return (
+			<table className="table table-striped">
+				<thead className="thead-light">
+					<tr>
+						<th>
+							{title}{" "}
+							<span className="badge badge-info">
+								{this.props.tableData[idx].length}
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>{this.renderTableData(idx)}</tbody>
+			</table>
+		);
+	}
 
 	render() {
 		return (
 			<div>
-				<table className="table">
-					<thead className="thead-light">
-						<tr>
-							<th>
-								Device Info{"  "}
-								<span className="badge badge-info">
-									{this.props.tableData[2].length}
-								</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>{this.renderTableData(2)}</tbody>
-				</table>
-				<table className="table">
-					<thead className="thead-light">
-						<tr>
-							<th>
-								Pub Ads{"  "}
-								<span className="badge badge-info">
-									{this.props.tableData[0].length}
-								</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>{this.renderTableData(0)}</tbody>
-				</table>
-				<table className="table">
-					<thead className="thead-light">
-						<tr>
-							<th>
-								Stream IDs{"  "}
-								<span className="badge badge-info">
-									{this.props.tableData[1].length}
-								</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>{this.renderTableData(1)}</tbody>
-				</table>
+				{this.renderTable(2, "Device Info")}
+				{this.renderTable(0, "Pub Ads")}
+				{this.renderTable(1, "Stream IDs")}
 			</div>
 		);
 	}
