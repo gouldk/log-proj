@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import DeviceInfoCard from "./deviceInfoCard";
 import "../custom.css";
 
 class DisplayResults extends Component {
 	state = {};
 
-	renderTableData = idx => {
-		return this.props.tableData[idx].map((dataPoint, index) => {
+	renderTableData = data => {
+		return data.map((dataPoint, index) => {
 			return (
 				<tr key={index}>
 					<td className="mr-0">{dataPoint}</td>
@@ -14,30 +15,26 @@ class DisplayResults extends Component {
 		});
 	};
 
-	// renderDeviceData = idx => {
-	// 	return this.props.tableData[idx].map((dataPoint, index) => {
-	// 		return (
-	// 			<tr key={index}>
-	// 				<td />
-	// 			</tr>
-	// 		);
-	// 	});
-	// };
-
-	renderTable(idx, title) {
+	renderTable(data, title) {
 		return (
 			<table className="table table-striped">
 				<thead className="thead-light">
 					<tr>
-						<th>
-							{title}{" "}
-							<span className="badge badge-info">
-								{this.props.tableData[idx].length}
-							</span>
+						<th
+							data-toggle="collapse"
+							data-target={"#" + title.charAt(0)}
+							className="dropdown-toggle"
+						>
+							{title} <span className="badge badge-info">{data.length}</span>
+							{/* <span className="font-weight-light align-right">
+								click to expose // hide
+							</span> */}
 						</th>
 					</tr>
 				</thead>
-				<tbody>{this.renderTableData(idx)}</tbody>
+				<tbody id={title.charAt(0)} className="collapse">
+					{this.renderTableData(data)}
+				</tbody>
 			</table>
 		);
 	}
@@ -45,9 +42,15 @@ class DisplayResults extends Component {
 	render() {
 		return (
 			<div>
-				{this.renderTable(2, "Device Info")}
-				{this.renderTable(0, "Pub Ads")}
-				{this.renderTable(1, "Stream IDs")}
+				<DeviceInfoCard
+					provider={this.props.tableData.deviceInfo.provider}
+					version={this.props.tableData.deviceInfo.version}
+					model={this.props.tableData.deviceInfo.model}
+					adobeID={this.props.tableData.deviceInfo.adobeID}
+				/>
+				{/* {this.renderDevice(this.props.tableData.version, "Device Info")} */}
+				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
+				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
 			</div>
 		);
 	}

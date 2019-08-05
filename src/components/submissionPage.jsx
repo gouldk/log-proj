@@ -41,15 +41,28 @@ class SubmissionPage extends Component {
 		let pubAds = lineArray.filter(line => line.includes("/ads?"));
 		let streamIDs = lineArray.filter(line => line.includes("streamid"));
 		let appVersions = lineArray.filter(line => line.includes("app_version:"));
-		let parsedOutput = [pubAds, streamIDs, appVersions];
+		let cableProvider = lineArray.filter(line =>
+			line.includes("cable_provider:")
+		);
+		let deviceModelInfo = lineArray.filter(line =>
+			line.includes("device_model_info:")
+		);
+		let adobeID = lineArray.filter(line => line.includes("adobe_id:"));
+		let deviceInfo = {
+			provider: cableProvider[0],
+			version: appVersions[0],
+			model: deviceModelInfo[0],
+			adobeID: adobeID[0]
+		};
+		let parsedOutput = {
+			pubAd: pubAds,
+			streamID: streamIDs,
+			deviceInfo: deviceInfo
+		};
 		this.setState({ parsedText: parsedOutput });
 		console.log(parsedOutput);
-		// console.log(pubAds);
-		// console.log(streamIDs);
-		// console.log(appVersions);
 	};
 
-	// Flesh out with functionality & file checking
 	onDrop = acceptedFiles => {
 		const reader = new FileReader();
 		const file = acceptedFiles[0];
@@ -59,7 +72,6 @@ class SubmissionPage extends Component {
 			var contents = event.target.result;
 			this.setState({ entryText: contents });
 			this.handleSubmit();
-			// console.log("File contents: " + contents);
 		};
 
 		reader.readAsText(file);
