@@ -40,6 +40,7 @@ class SubmissionPage extends Component {
 		let lineArray = text.split(/\r?\n/);
 		let pubAds = lineArray.filter(line => line.includes("/ads?"));
 		let streamIDs = lineArray.filter(line => line.includes("streamid"));
+		let errors = lineArray.filter(line => line.includes("ERROR"));
 		let appVersions = lineArray.filter(line => line.includes("app_version:"));
 		let cableProvider = lineArray.filter(line =>
 			line.includes("cable_provider:")
@@ -48,16 +49,21 @@ class SubmissionPage extends Component {
 			line.includes("device_model_info:")
 		);
 		let adobeID = lineArray.filter(line => line.includes("adobe_id:"));
+		let an = lineArray.filter(line => line.includes("an:"));
+
 		let deviceInfo = {
 			provider: cableProvider[0],
 			version: appVersions[0],
 			model: deviceModelInfo[0],
-			adobeID: adobeID[0]
+			adobeID: adobeID[0],
+			an: an[0]
 		};
+
 		let parsedOutput = {
 			pubAd: pubAds,
 			streamID: streamIDs,
-			deviceInfo: deviceInfo
+			deviceInfo: deviceInfo,
+			error: errors
 		};
 		this.setState({ parsedText: parsedOutput });
 		console.log(parsedOutput);

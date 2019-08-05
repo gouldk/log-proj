@@ -25,7 +25,8 @@ class DisplayResults extends Component {
 							data-target={"#" + title.charAt(0)}
 							className="dropdown-toggle"
 						>
-							{title} <span className="badge badge-info">{data.length}</span>
+							{title}{" "}
+							<span className="badge badge-info m-1">{data.length}</span>
 							{/* <span className="font-weight-light align-right">
 								click to expose // hide
 							</span> */}
@@ -47,10 +48,12 @@ class DisplayResults extends Component {
 					version={this.props.tableData.deviceInfo.version}
 					model={this.props.tableData.deviceInfo.model}
 					adobeID={this.props.tableData.deviceInfo.adobeID}
+					an={this.props.tableData.deviceInfo.an}
 				/>
 				{/* {this.renderDevice(this.props.tableData.version, "Device Info")} */}
 				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
 				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
+				{this.renderTable(this.props.tableData.error, "Errors")}
 			</div>
 		);
 	}
