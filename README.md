@@ -10,6 +10,6 @@ To-do:
 
 <ul>
   <li>Add a more readable table</li>
-  <li>Add text file drag & drop functionality</li>
   <li>Display device info at top of parse page</li>
+  <li>Add separate Fire TV parser</li>
 </ul>
