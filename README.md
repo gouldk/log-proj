@@ -9,7 +9,6 @@ A React-based parsing tool for hefty stream logs pulled from devices such as Rok
 To-do:
 
 <ul>
-  <li>Add a more readable table</li>
-  <li>Display device info at top of parse page</li>
   <li>Add separate Fire TV parser</li>
+  <li>Add a more readable table</li>
 </ul>
