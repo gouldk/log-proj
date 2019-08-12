@@ -10,10 +10,10 @@ class DeviceSelect extends Component {
 	render() {
 		return (
 			<select
-				className="custom-select"
+				className="custom-select w-50"
 				onChange={e => this.props.onSelect(e.target.value)}
 				value={this.state.id}
-				disabled={true}
+				disabled={false}
 			>
 				<option value="Roku">Roku</option>
 				<option value="FTV">Fire TV</option>

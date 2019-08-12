@@ -40,9 +40,9 @@ class DisplayResults extends Component {
 		);
 	}
 
-	render() {
+	renderRoku = () => {
 		return (
-			<div>
+			<span>
 				<DeviceInfoCard
 					provider={this.props.tableData.deviceInfo.provider}
 					version={this.props.tableData.deviceInfo.version}
@@ -50,12 +50,46 @@ class DisplayResults extends Component {
 					adobeID={this.props.tableData.deviceInfo.adobeID}
 					an={this.props.tableData.deviceInfo.an}
 				/>
-				{/* {this.renderDevice(this.props.tableData.version, "Device Info")} */}
 				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
 				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
 				{this.renderTable(this.props.tableData.error, "Errors")}
-			</div>
+			</span>
 		);
+	};
+
+	renderFTV = () => {
+		return (
+			<span>
+				<DeviceInfoCard
+					provider={this.props.tableData.deviceInfo.provider}
+					version={this.props.tableData.deviceInfo.version}
+					model={this.props.tableData.deviceInfo.model}
+					adobeID={this.props.tableData.deviceInfo.adobeID}
+					an={this.props.tableData.deviceInfo.an}
+				/>
+				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
+				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
+				{this.renderTable(this.props.tableData.error, "Errors")}
+			</span>
+		);
+	};
+
+	renderDevice = () => {
+		console.log(this.props.deviceID);
+		switch (this.props.deviceID) {
+			case "Roku":
+				console.log("Rendering Roku...");
+				return this.renderRoku();
+			case "FTV":
+				console.log("Rendering FTV...");
+				return this.renderFTV();
+			default:
+				break;
+		}
+	};
+
+	render() {
+		return <div>{this.renderDevice()}</div>;
 	}
 }
 

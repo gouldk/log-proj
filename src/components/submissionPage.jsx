@@ -25,7 +25,16 @@ class SubmissionPage extends Component {
 	handleSubmit = () => {
 		console.log("Submit requested.");
 		let log = this.state.entryText;
-		this.logParser(log);
+		switch (this.state.deviceID) {
+			case "Roku":
+				this.rokuLogParse(log);
+				break;
+			case "FTV":
+				this.ftvLogParse(log);
+				break;
+			default:
+				break;
+		}
 		this.setState({
 			preSubmission: false //change back to false
 		});
@@ -36,7 +45,9 @@ class SubmissionPage extends Component {
 		this.setState({ deviceID: deviceID });
 	};
 
-	logParser = text => {
+	ftvLogParse = text => {};
+
+	rokuLogParse = text => {
 		let lineArray = text.split(/\r?\n/);
 		let pubAds = lineArray.filter(line => line.includes("/ads?"));
 		let streamIDs = lineArray.filter(line => line.includes("streamid"));
@@ -66,7 +77,7 @@ class SubmissionPage extends Component {
 			error: errors
 		};
 		this.setState({ parsedText: parsedOutput });
-		console.log(parsedOutput);
+		// console.log(parsedOutput);
 	};
 
 	onDrop = acceptedFiles => {
@@ -115,7 +126,10 @@ class SubmissionPage extends Component {
 					</div>
 				)} */}
 				{!this.state.preSubmission && (
-					<DisplayResults tableData={this.state.parsedText} />
+					<DisplayResults
+						deviceID={this.state.deviceID}
+						tableData={this.state.parsedText}
+					/>
 				)}
 			</div>
 		);

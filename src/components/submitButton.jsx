@@ -8,11 +8,13 @@ class SubmitButton extends Component {
 			<div>
 				<button
 					type="button"
-					className="btn btn-primary m-2"
+					className="btn btn-outline-primary m-2 w-50"
 					// className="button"
 					disabled={false}
 					onClick={this.props.onSubmit}
 				>
+					{" "}
+					Submit{" "}
 					<span role="img" aria-label="send">
 						✍🏼
 					</span>
