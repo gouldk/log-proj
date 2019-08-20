@@ -65,14 +65,26 @@ class SubmissionPage extends Component {
 		);
 		let adobeID = lineArray.filter(line => line.includes("adobe_id:"));
 		let an = lineArray.filter(line => line.includes("an:"));
+		let deviceInfo;
 
-		let deviceInfo = {
-			provider: cableProvider[0].substring(21, cableProvider[0].length - 1),
-			version: appVersions[0].substring(18, appVersions[0].length - 1),
-			model: deviceModelInfo[0].substring(24, deviceModelInfo[0].length - 1),
-			adobeID: adobeID[0].substring(15, adobeID[0].length - 1),
-			an: an[0].substring(9, an[0].length - 1)
-		};
+		// Check if able to create deviceInfo properly, else empty over undef to avoid err.
+		if (deviceModelInfo[0] !== undefined) {
+			deviceInfo = {
+				provider: cableProvider[0].substring(21, cableProvider[0].length - 1),
+				version: appVersions[0].substring(18, appVersions[0].length - 1),
+				model: deviceModelInfo[0].substring(24, deviceModelInfo[0].length - 1),
+				adobeID: adobeID[0].substring(15, adobeID[0].length - 1),
+				an: an[0].substring(9, an[0].length - 1)
+			};
+		} else {
+			deviceInfo = {
+				provider: "",
+				version: "",
+				model: "Unable to detect...",
+				adobeID: "",
+				an: ""
+			};
+		}
 
 		let parsedOutput = {
 			pubAd: pubAds,
@@ -150,20 +162,27 @@ class SubmissionPage extends Component {
 		document.body.removeChild(element);
 	};
 
+	// helps to center h1 title with dynamic div columns
+	titleTag = () => {
+		if (this.state.preSubmission) {
+			return <h1 align="center">*</h1>;
+		} else {
+			return <h1 align="right">*</h1>;
+		}
+	};
+
 	render() {
 		return (
 			<div className="container-fluid">
 				<div className="row">
-					<div className="col-6">
-						<h1 align="right">*</h1>
-					</div>
-					<div className="col-6">
-						<span align="right">
-							{!this.state.preSubmission && (
+					<div className="col">{this.titleTag()}</div>
+					{!this.state.preSubmission && (
+						<div className="col-6">
+							<span align="right">
 								<ExportResults handleExport={this.handleExport} />
-							)}
-						</span>
-					</div>
+							</span>
+						</div>
+					)}
 				</div>
 				{/* <h6 align="center"><i>where's your excuse now?</i></h6> */}
 				{this.state.preSubmission && (
@@ -183,11 +202,6 @@ class SubmissionPage extends Component {
 						<SubmitButton onSubmit={this.handleSubmit} />
 					</div>
 				)}
-				{/* {!this.state.preSubmission && (
-					<div className="spinner-border text-primary" role="status">
-						<span className="sr-only">Loading...</span>
-					</div>
-				)} */}
 				{!this.state.preSubmission && (
 					<DisplayResults
 						deviceID={this.state.deviceID}
