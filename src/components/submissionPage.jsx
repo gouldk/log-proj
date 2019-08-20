@@ -107,7 +107,15 @@ class SubmissionPage extends Component {
 	// Handles export file formatting
 	parsedString = () => {
 		let text = this.state.parsedText;
-		let str = "pubAds:\n" + text.pubAds; // finish by parsedText structure
+		let str =
+			"------ Pub Ads ------\n" +
+			text.pubAd.join("\n") +
+			"\n------ Stream IDs ------\n" +
+			text.streamID.join("\n") +
+			"\n------ Errors ------\n" +
+			text.error.join("\n");
+
+		return str;
 	};
 
 	// Export the current parsed log to a text file (simplified log)
@@ -130,8 +138,7 @@ class SubmissionPage extends Component {
 
 		element.setAttribute(
 			"href",
-			"data:text/plain;charset=utf-8," +
-				encodeURIComponent(this.state.parsedText)
+			"data:text/plain;charset=utf-8," + encodeURIComponent(this.parsedString())
 		);
 		element.setAttribute("download", fileName);
 
@@ -141,14 +148,6 @@ class SubmissionPage extends Component {
 		element.click();
 
 		document.body.removeChild(element);
-
-		// let dl = document.createElement("export.txt");
-		// var file = new Blob([new TextEncoder().encode("apple")], {
-		// 	type: "text/plain"
-		// });
-		// dl.href = URL.createObjectURL(file);
-		// dl.download = "export.txt";
-		// dl.click();
 	};
 
 	render() {
