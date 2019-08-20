@@ -5,6 +5,7 @@ import "../custom.css";
 class DisplayResults extends Component {
 	state = {};
 
+	// Render the table data with given data array
 	renderTableData = data => {
 		return data.map((dataPoint, index) => {
 			return (
@@ -15,6 +16,7 @@ class DisplayResults extends Component {
 		});
 	};
 
+	// Render a table with the provided data array & title
 	renderTable(data, title) {
 		return (
 			<table className="table table-striped">
@@ -40,6 +42,7 @@ class DisplayResults extends Component {
 		);
 	}
 
+	// Roku style rendering
 	renderRoku = () => {
 		return (
 			<span>
@@ -57,6 +60,7 @@ class DisplayResults extends Component {
 		);
 	};
 
+	// Fire TV style rendering
 	renderFTV = () => {
 		return (
 			<span>
@@ -74,8 +78,8 @@ class DisplayResults extends Component {
 		);
 	};
 
+	// Determines which parse method to use based on provided device ID
 	renderDevice = () => {
-		console.log(this.props.deviceID);
 		switch (this.props.deviceID) {
 			case "Roku":
 				console.log("Rendering Roku...");

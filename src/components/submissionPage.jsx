@@ -5,6 +5,7 @@ import DeviceSelect from "./deviceSelect";
 import DisplayResults from "./displayResults";
 import "../custom.css";
 import Dropzone from "react-dropzone";
+import ExportResults from "./exportResults";
 
 // Sets the default log option
 let defaultLog = "Roku"; // "Roku", "FTV"...
@@ -22,6 +23,7 @@ class SubmissionPage extends Component {
 		this.child = React.createRef();
 	}
 
+	// Submit button's onClick handler
 	handleSubmit = () => {
 		console.log("Submit requested.");
 		let log = this.state.entryText;
@@ -40,6 +42,7 @@ class SubmissionPage extends Component {
 		});
 	};
 
+	// Changes the method of log parsing based on device.
 	handleSelect = deviceID => {
 		console.log("Selection changed:", deviceID);
 		this.setState({ deviceID: deviceID });
@@ -47,6 +50,7 @@ class SubmissionPage extends Component {
 
 	ftvLogParse = text => {};
 
+	// Parse out the relevant information specific to Roku device logs.
 	rokuLogParse = text => {
 		let lineArray = text.split(/\r?\n/);
 		let pubAds = lineArray.filter(line => line.includes("/ads?"));
@@ -63,11 +67,11 @@ class SubmissionPage extends Component {
 		let an = lineArray.filter(line => line.includes("an:"));
 
 		let deviceInfo = {
-			provider: cableProvider[0],
-			version: appVersions[0],
-			model: deviceModelInfo[0],
-			adobeID: adobeID[0],
-			an: an[0]
+			provider: cableProvider[0].substring(21, cableProvider[0].length - 1),
+			version: appVersions[0].substring(18, appVersions[0].length - 1),
+			model: deviceModelInfo[0].substring(24, deviceModelInfo[0].length - 1),
+			adobeID: adobeID[0].substring(15, adobeID[0].length - 1),
+			an: an[0].substring(9, an[0].length - 1)
 		};
 
 		let parsedOutput = {
@@ -80,6 +84,7 @@ class SubmissionPage extends Component {
 		// console.log(parsedOutput);
 	};
 
+	// Handles the processing of drag & drop files
 	onDrop = acceptedFiles => {
 		const reader = new FileReader();
 		const file = acceptedFiles[0];
@@ -94,15 +99,74 @@ class SubmissionPage extends Component {
 		reader.readAsText(file);
 	};
 
+	// Updates the point of reference used by the entry text box when new text is provided
 	handleTextChange = text => {
 		this.setState({ entryText: text.target.value });
 	};
 
+	// Handles export file formatting
+	parsedString = () => {
+		let text = this.state.parsedText;
+		let str = "pubAds:\n" + text.pubAds; // finish by parsedText structure
+	};
+
+	// Export the current parsed log to a text file (simplified log)
+	handleExport = () => {
+		// let time = String(new Date().getDate());
+		// console.log(time);
+		console.log("Exporting...");
+		let utc = String(
+			new Date()
+				.toJSON()
+				.slice(0, 10)
+				.replace(/-/g, "/")
+		);
+
+		let desc = this.state.parsedText.deviceInfo.model;
+		console.log(desc);
+		let fileName = desc + " " + utc;
+		console.log(fileName);
+		let element = document.createElement("a");
+
+		element.setAttribute(
+			"href",
+			"data:text/plain;charset=utf-8," +
+				encodeURIComponent(this.state.parsedText)
+		);
+		element.setAttribute("download", fileName);
+
+		element.style.display = "none";
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
+
+		// let dl = document.createElement("export.txt");
+		// var file = new Blob([new TextEncoder().encode("apple")], {
+		// 	type: "text/plain"
+		// });
+		// dl.href = URL.createObjectURL(file);
+		// dl.download = "export.txt";
+		// dl.click();
+	};
+
 	render() {
 		return (
-			<div>
-				<h1 align="center">*</h1>
-				<h6 align="center">{/* <i>where's your excuse now?</i> */}</h6>
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-6">
+						<h1 align="right">*</h1>
+					</div>
+					<div className="col-6">
+						<span align="right">
+							{!this.state.preSubmission && (
+								<ExportResults handleExport={this.handleExport} />
+							)}
+						</span>
+					</div>
+				</div>
+				{/* <h6 align="center"><i>where's your excuse now?</i></h6> */}
 				{this.state.preSubmission && (
 					<div className="centered">
 						<Dropzone onDrop={this.onDrop}>
