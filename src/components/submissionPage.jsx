@@ -117,14 +117,24 @@ class SubmissionPage extends Component {
 	};
 
 	// Handles export file formatting
-	parsedString = () => {
+	prepareStringExport = () => {
 		let text = this.state.parsedText;
 		let str =
-			"------ Pub Ads ------\n" +
+			"------ Session Info ------\n" +
+			text.deviceInfo.model +
+			"\n" +
+			text.deviceInfo.an +
+			"\n" +
+			text.deviceInfo.version +
+			"\n" +
+			text.deviceInfo.provider +
+			"\n" +
+			text.deviceInfo.adobeID +
+			"\n\n------ Pub Ads ------\n" +
 			text.pubAd.join("\n") +
-			"\n------ Stream IDs ------\n" +
+			"\n\n------ Stream IDs ------\n" +
 			text.streamID.join("\n") +
-			"\n------ Errors ------\n" +
+			"\n\n------ Errors ------\n" +
 			text.error.join("\n");
 
 		return str;
@@ -150,7 +160,8 @@ class SubmissionPage extends Component {
 
 		element.setAttribute(
 			"href",
-			"data:text/plain;charset=utf-8," + encodeURIComponent(this.parsedString())
+			"data:text/plain;charset=utf-8," +
+				encodeURIComponent(this.prepareStringExport())
 		);
 		element.setAttribute("download", fileName);
 
@@ -206,6 +217,7 @@ class SubmissionPage extends Component {
 					<DisplayResults
 						deviceID={this.state.deviceID}
 						tableData={this.state.parsedText}
+						rawData={this.state.entryText}
 					/>
 				)}
 			</div>

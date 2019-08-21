@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DeviceInfoCard from "./deviceInfoCard";
+import CodeContext from "./codeContext";
+import CopyToClipboard from "react-copy-to-clipboard";
 import "../custom.css";
 
 class DisplayResults extends Component {
@@ -9,8 +11,26 @@ class DisplayResults extends Component {
 	renderTableData = data => {
 		return data.map((dataPoint, index) => {
 			return (
+				// <tr key={index}>
+				// 	<td className="mr-0">{dataPoint}</td>
+				// </tr>
 				<tr key={index}>
 					<td className="mr-0">{dataPoint}</td>
+					<td className="mr-0">
+						<div className="btn-group-vertical" role="group" aria-label="tools">
+							<CodeContext log={this.props.rawData} text={dataPoint} />
+							<CopyToClipboard text={dataPoint}>
+								<button
+									className="btn btn-sm btn-outline-link"
+									data-toggle="tooltip"
+									data-placement="right"
+									title="Copy"
+								>
+									✂️
+								</button>
+							</CopyToClipboard>
+						</div>
+					</td>
 				</tr>
 			);
 		});
@@ -26,6 +46,7 @@ class DisplayResults extends Component {
 							data-toggle="collapse"
 							data-target={"#" + title.charAt(0)}
 							className="dropdown-toggle"
+							style={{ width: "95%" }}
 						>
 							{title}{" "}
 							<span className="badge badge-info m-1">{data.length}</span>
@@ -33,6 +54,7 @@ class DisplayResults extends Component {
 								click to expose // hide
 							</span> */}
 						</th>
+						<th className="thead-light" style={{ width: "5%" }} />
 					</tr>
 				</thead>
 				<tbody id={title.charAt(0)} className="collapse">
