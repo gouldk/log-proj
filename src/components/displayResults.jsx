@@ -9,16 +9,35 @@ class DisplayResults extends Component {
 
 	// Render the table data with given data array
 	renderTableData = data => {
+		// adding a simple hashcode function for use on string (for purposes of ID'ing the modals)
+		String.prototype.hashCode = function() {
+			var hash = 0;
+			if (this.length == 0) {
+				return hash;
+			}
+			for (var i = 0; i < this.length; i++) {
+				var char = this.charCodeAt(i);
+				hash = (hash << 5) - hash + char;
+				hash = hash & hash; // Convert to 32bit integer
+			}
+			return hash;
+		};
+
 		return data.map((dataPoint, index) => {
 			return (
-				// <tr key={index}>
-				// 	<td className="mr-0">{dataPoint}</td>
-				// </tr>
 				<tr key={index}>
 					<td className="mr-0">{dataPoint}</td>
 					<td className="mr-0">
-						<div className="btn-group-vertical" role="group" aria-label="tools">
-							<CodeContext log={this.props.rawData} text={dataPoint} />
+						<div
+							className="btn-group-vertical-sm"
+							role="group"
+							aria-label="tools"
+						>
+							<CodeContext
+								log={this.props.rawData}
+								text={dataPoint}
+								id={(dataPoint + index).hashCode()}
+							/>
 							<CopyToClipboard text={dataPoint}>
 								<button
 									className="btn btn-sm btn-outline-link"

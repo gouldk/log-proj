@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 class CodeContext extends Component {
-	state = {};
+	state = {
+		seenEvents: []
+	};
 
 	pullLogContext = () => {
 		let splitLog = this.props.log.split(/\r?\n/);
@@ -20,18 +22,19 @@ class CodeContext extends Component {
 
 	render() {
 		let modalData = this.pullLogContext();
+		let id = this.props.id;
 		return (
 			<div>
 				<button
 					className="btn btn-sm btn-outline-link"
 					data-toggle="modal"
-					data-target="#Modal"
+					data-target={"#Modal" + id}
 				>
 					🔎
 				</button>
 				<div
 					className="modal fade"
-					id="Modal"
+					id={"Modal" + id}
 					tabIndex="-1"
 					role="dialog"
 					aria-labelledby="ModalLabel"
@@ -53,17 +56,26 @@ class CodeContext extends Component {
 								</button>
 							</div>
 							<div className="modal-body bg-dark">
-								<p>
-									<p className="text-white-50 text-monospace">
+								<span>
+									<p
+										className="text-white-50 text-monospace"
+										style={{ fontSize: "13px" }}
+									>
 										{modalData[0] + "\n"}
 									</p>
-									<p className="text-white text-monospace">
+									<p
+										className="text-white text-monospace"
+										style={{ fontSize: "13px" }}
+									>
 										{modalData[1] + "\n"}
 									</p>
-									<p className="text-white-50 text-monospace">
+									<p
+										className="text-white-50 text-monospace"
+										style={{ fontSize: "13px" }}
+									>
 										{modalData[2] + "\n"}
 									</p>
-								</p>
+								</span>
 							</div>
 							<div className="modal-footer">
 								<button
