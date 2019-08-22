@@ -178,7 +178,7 @@ class SubmissionPage extends Component {
 			return (
 				<img
 					src="icon.png"
-					style={{ display: "block", margin: "0 auto" }}
+					style={{ display: "block", margin: "10px auto" }}
 					height="100vh"
 				/>
 			);
@@ -186,7 +186,7 @@ class SubmissionPage extends Component {
 			return (
 				<img
 					src="icon.png"
-					style={{ float: "right", display: "block", margin: "0 0 10px" }}
+					style={{ float: "right", display: "block", margin: "10px 0" }}
 					height="100vh"
 				/>
 			);
