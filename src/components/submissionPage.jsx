@@ -38,7 +38,7 @@ class SubmissionPage extends Component {
 				break;
 		}
 		this.setState({
-			preSubmission: false //change back to false
+			preSubmission: false
 		});
 	};
 
@@ -48,6 +48,7 @@ class SubmissionPage extends Component {
 		this.setState({ deviceID: deviceID });
 	};
 
+	// Parse out the relevant information specific to Fire TV device logs.
 	ftvLogParse = text => {};
 
 	// Parse out the relevant information specific to Roku device logs.
@@ -142,8 +143,6 @@ class SubmissionPage extends Component {
 
 	// Export the current parsed log to a text file (simplified log)
 	handleExport = () => {
-		// let time = String(new Date().getDate());
-		// console.log(time);
 		console.log("Exporting...");
 		let utc = String(
 			new Date()
@@ -153,9 +152,8 @@ class SubmissionPage extends Component {
 		);
 
 		let desc = this.state.parsedText.deviceInfo.model;
-		console.log(desc);
 		let fileName = desc + " " + utc;
-		console.log(fileName);
+		console.log("Downloading " + fileName);
 		let element = document.createElement("a");
 
 		element.setAttribute(
@@ -173,7 +171,7 @@ class SubmissionPage extends Component {
 		document.body.removeChild(element);
 	};
 
-	// helps to center h1 title with dynamic div columns
+	// helper to center h1 title with dynamic div columns
 	titleTag = () => {
 		if (this.state.preSubmission) {
 			return <h1 align="center">*</h1>;

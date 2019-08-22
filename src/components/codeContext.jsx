@@ -9,7 +9,7 @@ class CodeContext extends Component {
 		let splitLog = this.props.log.split(/\r?\n/);
 		let index = splitLog.indexOf(this.props.text);
 
-		if (index == -1) {
+		if (index === -1) {
 			return ["Error: Couldn't find context within log..."];
 		}
 
@@ -30,7 +30,9 @@ class CodeContext extends Component {
 					data-toggle="modal"
 					data-target={"#Modal" + id}
 				>
-					🔎
+					<span role="img" aria-label="Magnifying glass">
+						🔎
+					</span>
 				</button>
 				<div
 					className="modal fade"

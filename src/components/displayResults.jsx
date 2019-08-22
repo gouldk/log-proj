@@ -13,7 +13,7 @@ class DisplayResults extends Component {
 		// adding a simple hashcode function for use on string (for purposes of ID'ing the modals)
 		String.prototype.hashCode = function() {
 			var hash = 0;
-			if (this.length == 0) {
+			if (this.length === 0) {
 				return hash;
 			}
 			for (var i = 0; i < this.length; i++) {
@@ -49,7 +49,7 @@ class DisplayResults extends Component {
 							<a data-tip data-for="copy">
 								{" "}
 								<CopyToClipboard text={dataPoint}>
-									<button className="btn btn-sm btn-outline-link">✂️</button>
+									<button className="btn btn-sm btn-outline-link"><span role="img" aria-label="Scissor">✂️</span></button>
 								</CopyToClipboard>
 							</a>
 
