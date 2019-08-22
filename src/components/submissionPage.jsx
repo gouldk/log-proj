@@ -174,9 +174,22 @@ class SubmissionPage extends Component {
 	// helper to center h1 title with dynamic div columns
 	titleTag = () => {
 		if (this.state.preSubmission) {
-			return <h1 align="center">*</h1>;
+			// return <h1 align="center">*</h1>;
+			return (
+				<img
+					src="icon.png"
+					style={{ display: "block", margin: "0 auto" }}
+					height="100vh"
+				/>
+			);
 		} else {
-			return <h1 align="right">*</h1>;
+			return (
+				<img
+					src="icon.png"
+					style={{ float: "right", display: "block", margin: "0 0 10px" }}
+					height="100vh"
+				/>
+			);
 		}
 	};
 
