@@ -4,7 +4,7 @@
 
 A React-based parsing tool for hefty stream logs pulled from devices such as Roku & Fire TV. <b>Readable</b> logs, just a paste and click away!
 
-<i> Live version available @ </i> https://gouldk.github.io/log-proj/
+<a href="https://gouldk.github.io/log-proj/"><i> Live version available here on GitHub Pages! </i> </a>
 
 <b>Features</b>
 
