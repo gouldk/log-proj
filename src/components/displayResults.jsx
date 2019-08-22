@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DeviceInfoCard from "./deviceInfoCard";
 import CodeContext from "./codeContext";
 import CopyToClipboard from "react-copy-to-clipboard";
+import ReactTooltip from "react-tooltip";
 import "../custom.css";
 
 class DisplayResults extends Component {
@@ -33,21 +34,28 @@ class DisplayResults extends Component {
 							role="group"
 							aria-label="tools"
 						>
-							<CodeContext
-								log={this.props.rawData}
-								text={dataPoint}
-								id={(dataPoint + index).hashCode()}
-							/>
-							<CopyToClipboard text={dataPoint}>
-								<button
-									className="btn btn-sm btn-outline-link"
-									data-toggle="tooltip"
-									data-placement="right"
-									title="Copy"
-								>
-									✂️
-								</button>
-							</CopyToClipboard>
+							<a data-tip data-for="peek">
+								<CodeContext
+									log={this.props.rawData}
+									text={dataPoint}
+									id={(dataPoint + index).hashCode()}
+								/>
+							</a>
+
+							<ReactTooltip place="left" effect="solid" type="info" id="peek">
+								Peek in log
+							</ReactTooltip>
+
+							<a data-tip data-for="copy">
+								{" "}
+								<CopyToClipboard text={dataPoint}>
+									<button className="btn btn-sm btn-outline-link">✂️</button>
+								</CopyToClipboard>
+							</a>
+
+							<ReactTooltip place="left" effect="solid" type="info" id="copy">
+								Copy
+							</ReactTooltip>
 						</div>
 					</td>
 				</tr>

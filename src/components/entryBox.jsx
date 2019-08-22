@@ -8,7 +8,7 @@ class EntryBox extends Component {
 				<textarea
 					rows="12"
 					className="form-control"
-					placeholder="Drag / drop / paste your log here..."
+					placeholder="Drag & drop // copy & paste your log here..."
 					type="text"
 					value={this.props.displayText}
 					onChange={this.props.onChange}

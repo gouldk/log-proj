@@ -211,6 +211,17 @@ class SubmissionPage extends Component {
 
 						<DeviceSelect id={this.deviceID} onSelect={this.handleSelect} />
 						<SubmitButton onSubmit={this.handleSubmit} />
+						<div className="custom-control custom-switch">
+							<input
+								type="checkbox"
+								className="custom-control-input"
+								id="customSwitch1"
+								disabled={true}
+							/>
+							<label className="custom-control-label" htmlFor="customSwitch1">
+								Only show critical errors
+							</label>
+						</div>
 					</div>
 				)}
 				{!this.state.preSubmission && (
