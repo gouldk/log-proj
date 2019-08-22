@@ -11,9 +11,9 @@ A React-based parsing tool for hefty stream logs pulled from devices such as Rok
 <ul>
   <li>⬆️ Drag & drop uploading</li>
   <li>🔎 Peek in log to view the context of any line</li>
+  <li>📦 Simplified log exporting</li>
   <li>ℹ️ Device & stream analytics info</li>
   <li>✂️ One-click copy</li>
-  <li>📦 Simplified log exporting</li>
 </ul>
  
 
