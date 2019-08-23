@@ -49,7 +49,11 @@ class DisplayResults extends Component {
 							<a data-tip data-for="copy">
 								{" "}
 								<CopyToClipboard text={dataPoint}>
-									<button className="btn btn-sm btn-outline-link"><span role="img" aria-label="Scissor">✂️</span></button>
+									<button className="btn btn-sm btn-outline-link">
+										<span role="img" aria-label="Scissor">
+											✂️
+										</span>
+									</button>
 								</CopyToClipboard>
 							</a>
 
@@ -84,7 +88,10 @@ class DisplayResults extends Component {
 						<th className="thead-light" style={{ width: "5%" }} />
 					</tr>
 				</thead>
-				<tbody id={title.charAt(0)} className="collapse">
+				<tbody
+					id={title.charAt(0)}
+					className="collapse animated slideInRight faster"
+				>
 					{this.renderTableData(data)}
 				</tbody>
 			</table>
@@ -142,7 +149,7 @@ class DisplayResults extends Component {
 	};
 
 	render() {
-		return <div>{this.renderDevice()}</div>;
+		return <div className="animated flipInX fast">{this.renderDevice()}</div>;
 	}
 }
 
