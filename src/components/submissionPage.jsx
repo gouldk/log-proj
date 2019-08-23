@@ -6,16 +6,21 @@ import DisplayResults from "./displayResults";
 import "../custom.css";
 import Dropzone from "react-dropzone";
 import ExportResults from "./exportResults";
+import StyleSelect from "./styleSelect";
+import DisplayStreams from "./displayStreams";
 
 // Sets the default log option
 let defaultLog = "Roku"; // "Roku", "FTV"...
+let defaultGroup = true; // parse by group by default?
 
 class SubmissionPage extends Component {
 	state = {
 		preSubmission: true,
+		groupByID: defaultGroup,
 		deviceID: defaultLog,
 		entryText: "",
-		parsedText: []
+		parsedText: [],
+		parsedStreams: []
 	};
 
 	constructor(props) {
@@ -23,19 +28,36 @@ class SubmissionPage extends Component {
 		this.child = React.createRef();
 	}
 
+	handleStyle = () => {
+		this.setState({ groupByID: !this.state.groupByID });
+	};
+
 	// Submit button's onClick handler
 	handleSubmit = () => {
 		console.log("Submit requested.");
 		let log = this.state.entryText;
-		switch (this.state.deviceID) {
-			case "Roku":
-				this.rokuLogParse(log);
-				break;
-			case "FTV":
-				this.ftvLogParse(log);
-				break;
-			default:
-				break;
+		if (this.state.groupByID) {
+			switch (this.state.deviceID) {
+				case "Roku":
+					this.rokuStreamParse(log);
+					break;
+				// case "FTV":
+				// 	this.ftvLogParse(log);
+				// 	break;
+				default:
+					break;
+			}
+		} else {
+			switch (this.state.deviceID) {
+				case "Roku":
+					this.rokuLogParse(log);
+					break;
+				case "FTV":
+					this.ftvLogParse(log);
+					break;
+				default:
+					break;
+			}
 		}
 		this.setState({
 			preSubmission: false
@@ -95,6 +117,65 @@ class SubmissionPage extends Component {
 		};
 		this.setState({ parsedText: parsedOutput });
 		// console.log(parsedOutput);
+	};
+
+	// Parse out the relevant information specific to Roku logs, organized by stream ID
+	rokuStreamParse = text => {
+		let lineArray = text.split(/\r?\n/);
+
+		function lineHasID(line) {
+			// console.log(line);
+			// console.log(line.includes("streamid"));
+			return line.includes("streamid");
+		}
+
+		let arrayIndex = 0;
+		let i;
+		// index 0 contains info before stream start
+		let streamParsed = [];
+
+		for (i = 0; i < lineArray.length; i++) {
+			// if a new streamID is seen...
+			if (lineHasID(lineArray[i])) {
+				console.log("Increasing ID to " + (arrayIndex + 1));
+				arrayIndex++; // increase the index of array we're altering -- [[sID1] [sID2]]
+				console.log(arrayIndex);
+			}
+
+			if (streamParsed[arrayIndex] === undefined) {
+				streamParsed[arrayIndex] = [];
+			}
+
+			streamParsed[arrayIndex].push(lineArray[i]);
+		}
+
+		let parsed = [];
+
+		for (i = 0; i < streamParsed.length; i++) {
+			parsed[i] = this.formatAsset(streamParsed[i]);
+		}
+
+		this.setState({ parsedStreams: parsed });
+	};
+
+	formatAsset = asset => {
+		let streamID = asset.filter(line => line.includes("streamid:"));
+		let background = asset.filter(line => line.includes("hdbackgroundposter:"));
+		let assetID = asset.filter(line => line.includes("assetid:"));
+		let title = asset.filter(line => line.includes("mpxvideotitle:"));
+		let show = asset.filter(line => line.includes("mpxshow:"));
+		let category = asset.filter(line => line.includes("mpxvideocategory"));
+
+		let parsedOutput = {
+			streamID: streamID,
+			background: background,
+			assetID: assetID,
+			title: title,
+			show: show,
+			category: category
+		};
+
+		return parsedOutput;
 	};
 
 	// Handles the processing of drag & drop files
@@ -184,11 +265,12 @@ class SubmissionPage extends Component {
 			);
 		} else {
 			return (
-				<img
-					src="icon.png"
-					style={{ float: "right", display: "block", margin: "10px 0" }}
-					height="100vh"
-				/>
+				// <img
+				// 	src="icon.png"
+				// 	style={{ float: "right", display: "block", margin: "10px 0" }}
+				// 	height="100vh"
+				// />
+				<br />
 			);
 		}
 	};
@@ -206,7 +288,6 @@ class SubmissionPage extends Component {
 						</div>
 					)}
 				</div>
-				{/* <h6 align="center"><i>where's your excuse now?</i></h6> */}
 				{this.state.preSubmission && (
 					<div className="centered">
 						<Dropzone onDrop={this.onDrop}>
@@ -222,25 +303,21 @@ class SubmissionPage extends Component {
 
 						<DeviceSelect id={this.deviceID} onSelect={this.handleSelect} />
 						<SubmitButton onSubmit={this.handleSubmit} />
-						<div className="custom-control custom-switch">
-							<input
-								type="checkbox"
-								className="custom-control-input"
-								id="customSwitch1"
-								disabled={true}
-							/>
-							<label className="custom-control-label" htmlFor="customSwitch1">
-								Only show critical errors
-							</label>
-						</div>
+						<StyleSelect
+							onChange={this.handleStyle}
+							active={this.state.groupByID}
+						/>
 					</div>
 				)}
-				{!this.state.preSubmission && (
+				{!this.state.preSubmission && !this.state.groupByID && (
 					<DisplayResults
 						deviceID={this.state.deviceID}
 						tableData={this.state.parsedText}
 						rawData={this.state.entryText}
 					/>
+				)}
+				{!this.state.preSubmission && this.state.groupByID && (
+					<DisplayStreams tableData={this.state.parsedStreams} />
 				)}
 			</div>
 		);
