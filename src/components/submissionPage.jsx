@@ -124,11 +124,8 @@ class SubmissionPage extends Component {
 		let lineArray = text.split(/\r?\n/);
 
 		function lineHasID(line) {
-			// console.log(line);
-			// console.log(line.includes("streamid"));
 			return line.includes("streamid");
 		}
-
 		let arrayIndex = 0;
 		let i;
 		// index 0 contains info before stream start
@@ -141,16 +138,13 @@ class SubmissionPage extends Component {
 				arrayIndex++; // increase the index of array we're altering -- [[sID1] [sID2]]
 				console.log(arrayIndex);
 			}
-
 			if (streamParsed[arrayIndex] === undefined) {
 				streamParsed[arrayIndex] = [];
 			}
-
 			streamParsed[arrayIndex].push(lineArray[i]);
 		}
 
 		let parsed = [];
-
 		for (i = 0; i < streamParsed.length; i++) {
 			parsed[i] = this.formatAsset(streamParsed[i]);
 		}
@@ -164,15 +158,27 @@ class SubmissionPage extends Component {
 		let assetID = asset.filter(line => line.includes("assetid:"));
 		let title = asset.filter(line => line.includes("mpxvideotitle:"));
 		let show = asset.filter(line => line.includes("mpxshow:"));
-		let category = asset.filter(line => line.includes("mpxvideocategory"));
+		let category = asset.filter(line => line.includes("mpxvideocategory:"));
+		let videoID = asset.filter(line => line.includes("videoid:"));
+		let pid = asset.filter(line => line.includes("pid:"));
+		let postType = asset.filter(line => line.includes("post_type:"));
+		let postAuthState = asset.filter(line => line.includes("postauthstate:"));
+		let postAuthTag = asset.filter(line => line.includes("postauthtag:"));
+		let relativeURL = asset.filter(line => line.includes("relative_url:"));
 
 		let parsedOutput = {
-			streamID: streamID,
-			background: background,
-			assetID: assetID,
-			title: title,
-			show: show,
-			category: category
+			streamID: streamID[0],
+			background: background[0],
+			assetID: assetID[0],
+			title: title[0],
+			show: show[0],
+			category: category[0],
+			videoID: videoID[0],
+			pid: pid[0],
+			postType: postType[0],
+			postAuthState: postAuthState[0],
+			postAuthTag: postAuthTag[0],
+			relativeURL: relativeURL[0]
 		};
 
 		return parsedOutput;
@@ -259,6 +265,7 @@ class SubmissionPage extends Component {
 			return (
 				<img
 					src="icon.png"
+					alt="App"
 					style={{ display: "block", margin: "10px auto" }}
 					height="100vh"
 				/>
