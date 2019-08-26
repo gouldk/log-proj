@@ -11,6 +11,7 @@ A React-based parsing tool for hefty stream logs pulled from devices such as Rok
 <ul>
   <li>⬆️ Drag & drop uploading</li>
   <li>🔎 Peek in log to view the context of any line</li>
+  <li>📚 Breakdown log by asset</li>
   <li>📦 Simplified log exporting</li>
   <li>✂️ One-click copy</li>
   <li>📲 Device & stream analytics info</li>
@@ -21,6 +22,5 @@ A React-based parsing tool for hefty stream logs pulled from devices such as Rok
 
 <ul>
   <li>Add a type of error desc/filtering</li>
-  <li>Option to breakdown by content being streamed (i.e. streamid)</li>
   <li>Add separate Fire TV parser</li>
 </ul>
