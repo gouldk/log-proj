@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import EpisodeLogDisplay from "./episodeLogDisplay";
 class AssetInfoCard extends Component {
 	state = {};
 
@@ -11,38 +12,35 @@ class AssetInfoCard extends Component {
 						<div className="row">
 							<div className="col-8">
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Show: " + this.props.data.show}
+									{"show: " + this.props.data.show}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Stream ID: " + this.props.data.streamID}
+									{"stream ID: " + this.props.data.streamID}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Category: " + this.props.data.category}
+									{"category: " + this.props.data.category}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Asset ID: " + this.props.data.assetID}
+									{"asset ID: " + this.props.data.assetID}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Video ID: " + this.props.data.videoID}
+									{"video ID: " + this.props.data.videoID}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
 									{"PID: " + this.props.data.pid}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Post-Type: " + this.props.data.postType}
+									{"post-type: " + this.props.data.postType}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Post-Auth state: " + this.props.data.postAuthState}
+									{"post-auth state: " + this.props.data.postAuthState}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Post-Auth tag: " + this.props.data.postAuthTag}
+									{"post-auth tag: " + this.props.data.postAuthTag}
 								</h6>
 								<h6 className="card-subtitle mb-2 text-muted">
-									{"Relative URL: " + this.props.data.relativeURL}
+									{"relative URL: " + this.props.data.relativeURL}
 								</h6>
-								<a href="#!" className="card-link">
-									Show logs...
-								</a>
 							</div>
 							<div className="col-4">
 								<img
@@ -53,6 +51,15 @@ class AssetInfoCard extends Component {
 							</div>
 						</div>
 					</div>
+				</div>
+				<div className="card-footer">
+					{/* <a href="#!" className="card-link">
+						Show logs...
+					</a> */}
+					<EpisodeLogDisplay
+						id={this.props.id}
+						data={this.props.data}
+					></EpisodeLogDisplay>
 				</div>
 			</div>
 		);

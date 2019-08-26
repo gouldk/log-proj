@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import DeviceInfoCard from "./deviceInfoCard";
 import CodeContext from "./codeContext";
 import CopyToClipboard from "react-copy-to-clipboard";
 import ReactTooltip from "react-tooltip";
-import "../custom.css";
 
-class DisplayResults extends Component {
+class EpisodeLogDisplay extends Component {
 	state = {};
 
-	// Render the table data with given data array
 	renderTableData = data => {
 		// adding a simple hashcode function for use on string (for purposes of ID'ing the modals)
 		String.prototype.hashCode = function() {
@@ -36,7 +33,7 @@ class DisplayResults extends Component {
 						>
 							<a data-tip data-for="peek">
 								<CodeContext
-									log={this.props.rawData.split(/\r?\n/)}
+									log={this.props.data.originalText}
 									text={dataPoint}
 									id={(dataPoint + index).hashCode()}
 								/>
@@ -75,7 +72,7 @@ class DisplayResults extends Component {
 					<tr>
 						<th
 							data-toggle="collapse"
-							data-target={"#" + title.charAt(0)}
+							data-target={"#" + title.charAt(0) + this.props}
 							className="dropdown-toggle"
 							style={{ width: "95%" }}
 						>
@@ -89,7 +86,7 @@ class DisplayResults extends Component {
 					</tr>
 				</thead>
 				<tbody
-					id={title.charAt(0)}
+					id={title.charAt(0) + this.props.id}
 					className="collapse animated slideInRight faster"
 				>
 					{this.renderTableData(data)}
@@ -98,59 +95,15 @@ class DisplayResults extends Component {
 		);
 	}
 
-	// Roku style rendering
-	renderRoku = () => {
-		return (
-			<span>
-				<DeviceInfoCard
-					provider={this.props.tableData.deviceInfo.provider}
-					version={this.props.tableData.deviceInfo.version}
-					model={this.props.tableData.deviceInfo.model}
-					adobeID={this.props.tableData.deviceInfo.adobeID}
-					an={this.props.tableData.deviceInfo.an}
-				/>
-				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
-				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
-				{this.renderTable(this.props.tableData.error, "Errors")}
-			</span>
-		);
-	};
-
-	// Fire TV style rendering
-	renderFTV = () => {
-		return (
-			<span>
-				<DeviceInfoCard
-					provider={this.props.tableData.deviceInfo.provider}
-					version={this.props.tableData.deviceInfo.version}
-					model={this.props.tableData.deviceInfo.model}
-					adobeID={this.props.tableData.deviceInfo.adobeID}
-					an={this.props.tableData.deviceInfo.an}
-				/>
-				{this.renderTable(this.props.tableData.pubAd, "Pub Ads")}
-				{this.renderTable(this.props.tableData.streamID, "Stream IDs")}
-				{this.renderTable(this.props.tableData.error, "Errors")}
-			</span>
-		);
-	};
-
-	// Determines which parse method to use based on provided device ID
-	renderDevice = () => {
-		switch (this.props.deviceID) {
-			case "Roku":
-				console.log("Rendering Roku...");
-				return this.renderRoku();
-			case "FTV":
-				console.log("Rendering FTV...");
-				return this.renderFTV();
-			default:
-				break;
-		}
-	};
-
 	render() {
-		return <div className="animated flipInX fast">{this.renderDevice()}</div>;
+		return (
+			<div>
+				{this.renderTable(this.props.data.pubAds, "Pub Ads")}
+				{/* {this.renderTable(this.props.data.streamIDs, "Stream IDs")} */}
+				{this.renderTable(this.props.data.errors, "Errors")}
+			</div>
+		);
 	}
 }
 
-export default DisplayResults;
+export default EpisodeLogDisplay;

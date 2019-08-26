@@ -10,8 +10,8 @@ import StyleSelect from "./styleSelect";
 import DisplayStreams from "./displayStreams";
 
 // Sets the default log option
-let defaultLog = "Roku"; // "Roku", "FTV"...
-let defaultGroup = true; // parse by group by default?
+const defaultLog = "Roku"; // "Roku", "FTV"...
+const defaultGroup = true; // parse by group by default?
 
 class SubmissionPage extends Component {
 	state = {
@@ -144,8 +144,39 @@ class SubmissionPage extends Component {
 			streamParsed[arrayIndex].push(lineArray[i]);
 		}
 
+		// Parsing data for DeviceInfoCard
+		let cableProvider = lineArray.filter(line =>
+			line.includes("cable_provider:")
+		);
+		let deviceModelInfo = lineArray.filter(line =>
+			line.includes("device_model_info:")
+		);
+		let adobeID = lineArray.filter(line => line.includes("adobe_id:"));
+		let an = lineArray.filter(line => line.includes("an:"));
+		let appVersions = lineArray.filter(line => line.includes("app_version:"));
+		let deviceInfo;
+
+		if (deviceModelInfo[0] !== undefined) {
+			deviceInfo = {
+				provider: cableProvider[0].substring(21, cableProvider[0].length - 1),
+				version: appVersions[0].substring(18, appVersions[0].length - 1),
+				model: deviceModelInfo[0].substring(24, deviceModelInfo[0].length - 1),
+				adobeID: adobeID[0].substring(15, adobeID[0].length - 1),
+				an: an[0].substring(9, an[0].length - 1)
+			};
+		} else {
+			deviceInfo = {
+				provider: "",
+				version: "",
+				model: "Unable to detect...",
+				adobeID: "",
+				an: ""
+			};
+		}
+
 		let parsed = [];
-		for (i = 0; i < streamParsed.length; i++) {
+		parsed[0] = deviceInfo;
+		for (i = 1; i < streamParsed.length; i++) {
 			parsed[i] = this.formatAsset(streamParsed[i]);
 		}
 
@@ -165,6 +196,9 @@ class SubmissionPage extends Component {
 		let postAuthState = asset.filter(line => line.includes("postauthstate:"));
 		let postAuthTag = asset.filter(line => line.includes("postauthtag:"));
 		let relativeURL = asset.filter(line => line.includes("relative_url:"));
+		let pubAds = asset.filter(line => line.includes("/ads?"));
+		let streamIDs = asset.filter(line => line.includes("streamid"));
+		let errors = asset.filter(line => line.includes("ERROR"));
 
 		let parsedOutput = {
 			streamID: streamID[0],
@@ -178,7 +212,11 @@ class SubmissionPage extends Component {
 			postType: postType[0],
 			postAuthState: postAuthState[0],
 			postAuthTag: postAuthTag[0],
-			relativeURL: relativeURL[0]
+			relativeURL: relativeURL[0],
+			pubAds: pubAds,
+			streamIDs: streamIDs,
+			errors: errors,
+			originalText: asset
 		};
 
 		return parsedOutput;

@@ -6,7 +6,7 @@ class CodeContext extends Component {
 	};
 
 	pullLogContext = () => {
-		let splitLog = this.props.log.split(/\r?\n/);
+		let splitLog = this.props.log;
 		let index = splitLog.indexOf(this.props.text);
 
 		if (index === -1) {
