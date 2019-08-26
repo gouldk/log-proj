@@ -72,7 +72,7 @@ class EpisodeLogDisplay extends Component {
 					<tr>
 						<th
 							data-toggle="collapse"
-							data-target={"#" + title.charAt(0) + this.props}
+							data-target={"#" + title.charAt(0) + this.props.id}
 							className="dropdown-toggle"
 							style={{ width: "95%" }}
 						>
