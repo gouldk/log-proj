@@ -243,7 +243,7 @@ class SubmissionPage extends Component {
 	};
 
 	// Handles export file formatting
-	prepareStringExport = () => {
+	prepareFullExport = () => {
 		let text = this.state.parsedText;
 		let str =
 			"------ Session Info ------\n" +
@@ -266,6 +266,56 @@ class SubmissionPage extends Component {
 		return str;
 	};
 
+	prepareAssetExport = () => {
+		let text = this.state.parsedStreams;
+		let str =
+			"------ Session Info ------\n" +
+			text[0].model +
+			"\n" +
+			text[0].an +
+			"\n" +
+			text[0].version +
+			"\n" +
+			text[0].provider +
+			"\n" +
+			text[0].adobeID +
+			"\n";
+
+		let i;
+
+		for (i = 1; i < text.length; i++) {
+			str =
+				str +
+				"\n\n" +
+				"------ ASSET INFO: \n" +
+				text[i].streamIDs +
+				"\n" +
+				text[i].title +
+				"\n" +
+				text[i].show +
+				"\n" +
+				text[i].category +
+				"\n" +
+				text[i].videoID +
+				"\n" +
+				text[i].pid +
+				"\n" +
+				text[i].postType +
+				"\n" +
+				text[i].postAuthState +
+				"\n" +
+				text[i].postAuthTag +
+				"\n" +
+				text[i].relativeURL +
+				"\n" +
+				"\n\n Pub Ads ------\n" +
+				text[i].pubAds.join("\n") +
+				"\n\n Errors ------\n" +
+				text[i].errors.join("\n");
+		}
+		return str;
+	};
+
 	// Export the current parsed log to a text file (simplified log)
 	handleExport = () => {
 		console.log("Exporting...");
@@ -275,17 +325,29 @@ class SubmissionPage extends Component {
 				.slice(0, 10)
 				.replace(/-/g, "/")
 		);
-
-		let desc = this.state.parsedText.deviceInfo.model;
+		let desc;
+		if (this.state.groupByID) {
+			desc = this.state.parsedStreams[0].model;
+		} else {
+			desc = this.state.parsedText.deviceInfo.model;
+		}
 		let fileName = desc + " " + utc;
 		console.log("Downloading " + fileName);
 		let element = document.createElement("a");
 
-		element.setAttribute(
-			"href",
-			"data:text/plain;charset=utf-8," +
-				encodeURIComponent(this.prepareStringExport())
-		);
+		if (this.state.groupByID) {
+			element.setAttribute(
+				"href",
+				"data:text/plain;charset=utf-8," +
+					encodeURIComponent(this.prepareAssetExport())
+			);
+		} else {
+			element.setAttribute(
+				"href",
+				"data:text/plain;charset=utf-8," +
+					encodeURIComponent(this.prepareFullExport())
+			);
+		}
 		element.setAttribute("download", fileName);
 
 		element.style.display = "none";
