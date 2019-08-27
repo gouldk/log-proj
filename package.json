@@ -2,7 +2,7 @@
 	"name": "log-proj",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://gouldk.github.io/log-proj/",
+	"homepage": "https://gouldk.github.io/logavulin/",
 	"dependencies": {
 		"bootstrap": "^4.3.1",
 		"gh-pages": "^2.0.1",
