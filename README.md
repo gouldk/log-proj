@@ -1,10 +1,11 @@
-# logavulin
-
 <p align="center"> <img src="/public/icon.png" width="200vh"/> </p>
+<h1 align="center">logavulin</h1>
 
-A React-based parsing tool for hefty stream logs pulled from devices such as Roku & Fire TV. <b>Readable</b> logs, just a paste and click away!
+A React-based parsing tool for distilling the important information out of the hefty stream logs pulled from devices such as Roku & Fire TV. <b>Readable</b> logs, just a paste and click away!
 
-<a href="https://gouldk.github.io/logavulin/"><i> Live version available here on GitHub Pages! </i> </a>
+<p align="center"><a href="https://gouldk.github.io/logavulin/"><i> Live version available here on GitHub Pages! </i> </a></p>
+
+<p align="center"> <img src="https://i.imgur.com/ayJ0hi0.gif"/> </p>
 
 <b>Features</b>
 
