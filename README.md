@@ -1,4 +1,4 @@
-# Logavulin
+# logavulin
 
 <p align="center"> <img src="/public/icon.png" width="200vh"/> </p>
 
