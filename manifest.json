@@ -1,6 +1,6 @@
 {
-	"short_name": "Log Parser",
-	"name": "Log Parser for Roku & FireTV",
+	"short_name": "logavulin",
+	"name": "Log parsing for Roku & FireTV",
 	"icons": [
 		{
 			"src": "favicon.ico",
