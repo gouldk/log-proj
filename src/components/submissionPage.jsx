@@ -23,11 +23,6 @@ class SubmissionPage extends Component {
 		parsedStreams: []
 	};
 
-	constructor(props) {
-		super(props);
-		this.child = React.createRef();
-	}
-
 	handleStyle = () => {
 		this.setState({ groupByID: !this.state.groupByID });
 	};
@@ -134,9 +129,7 @@ class SubmissionPage extends Component {
 		for (i = 0; i < lineArray.length; i++) {
 			// if a new streamID is seen...
 			if (lineHasID(lineArray[i])) {
-				console.log("Increasing ID to " + (arrayIndex + 1));
 				arrayIndex++; // increase the index of array we're altering -- [[sID1] [sID2]]
-				console.log(arrayIndex);
 			}
 			if (streamParsed[arrayIndex] === undefined) {
 				streamParsed[arrayIndex] = [];
